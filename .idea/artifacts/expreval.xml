@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jlink" build-on-make="true" name="expreval">
+    <output-path>$PROJECT_DIR$/out/artifacts/expreval</output-path>
+    <root id="root">
+      <element id="artifact" artifact-name="datastructure.eval:jar" />
+    </root>
+  </artifact>
+</component>

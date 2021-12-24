@@ -21,7 +21,7 @@ public class Main
 			try
 			{
 				String input = cin.nextLine();
-				if(Objects.equals(input, "?"))
+				if(Objects.equals(input, "?") || input.length() == 0)
 				{
 					Resources.PrintHelp();
 					continue;

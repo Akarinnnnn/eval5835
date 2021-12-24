@@ -59,17 +59,24 @@ public class Evaluator
 			else if (curToken.IsBinaryOperator() || curToken.type == TokenType.Func)
 			{
 				// -...
-				if (curToken.type == TokenType.Sub)
+				if (curToken.type == TokenType.Sub || curToken.type == TokenType.Add)
 				{
 					Token prev = tokens.get(Math.max(currentPos - 1, 0));
-					// 不是：122 - 1
-					// 或：) - 1
-					// 例：+ -1
+					// 反例：
+					// 122 - 1
+					// ) - 1
+					// 例：
+					// + -1
+					// + +1
 					if (prev.type != TokenType.Number && prev.type != TokenType.RBracket)
 					{
-						// 认定为负数
+						// 认定为数字的一部分
 						currentPos++;
-						operands.add(-tokens.get(currentPos).AsNumber());
+						double nextNumber = tokens.get(currentPos).AsNumber();
+						if(curToken.type == TokenType.Sub)
+							operands.add(-nextNumber);
+						else
+							operands.add(nextNumber);
 						continue;
 					}
 					// 认定为运算符，继续
@@ -133,8 +140,9 @@ public class Evaluator
 		}
 		catch (EmptyStackException e)
 		{
-			Resources.PrintHelp();
+			throw new InputMismatchException("表达式有误。");
 		}
+		
 		return operands.lastElement();
 	}
 	
